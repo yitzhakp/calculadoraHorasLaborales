@@ -57,8 +57,8 @@ else:
 
         if st.button("Aplicar función"):
             # convertir a datetime por seguridad
-            df[col_inicio] = pd.to_datetime(df[col_inicio], errors="coerce")
-            df[col_fin] = pd.to_datetime(df[col_fin], errors="coerce")
+            df[col_inicio] = pd.to_datetime(df[col_inicio], errors="coerce").dt.tz_localize(None)
+            df[col_fin] = pd.to_datetime(df[col_fin], errors="coerce").dt.tz_localize(None)
 
             df["Horas Laborales"] = df.apply(
                 lambda x: horas_laborales(x[col_inicio], x[col_fin])
