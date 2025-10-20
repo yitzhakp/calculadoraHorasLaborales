@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 import datetime
 from io import BytesIO
-from functions import horas_laborales
+from functions import get_diff
 
 # -------- Streamlit App --------
 st.title("Calculadora de Horas Laborales")
@@ -11,7 +11,6 @@ opcion = st.radio(
     "Selecciona una opción:",
     ["1️⃣ Ingresar dos fechas", "2️⃣ Subir un Excel"]
 )
-
 # ---------------- OPCIÓN 1 ----------------
 if opcion == "1️⃣ Ingresar dos fechas":
     st.subheader("Cálculo entre dos fechas")
@@ -34,7 +33,7 @@ if opcion == "1️⃣ Ingresar dos fechas":
             dt_inicio = datetime.datetime.combine(fecha_inicio, hora_inicio)
             dt_fin = datetime.datetime.combine(fecha_fin, hora_fin)
 
-            resultado = horas_laborales(dt_inicio, dt_fin)
+            resultado = get_diff(dt_inicio, dt_fin)
             st.success(f"La diferencia es: {resultado:.2f} horas laborales")
 
         except ValueError:
@@ -61,7 +60,7 @@ else:
             df[col_fin] = pd.to_datetime(df[col_fin], errors="coerce").dt.tz_localize(None)
 
             df["Horas Laborales"] = df.apply(
-                lambda x: horas_laborales(x[col_inicio], x[col_fin])
+                lambda x: get_diff(x[col_inicio], x[col_fin])
                 if pd.notnull(x[col_inicio]) and pd.notnull(x[col_fin]) else None,
                 axis=1
             )
