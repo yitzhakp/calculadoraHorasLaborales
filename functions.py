@@ -1,7 +1,7 @@
 from datetime import datetime, timedelta
 import pandas as pd
 
-df_festivos = pd.read_excel('./festivos_2024-2025.xlsx')
+df_festivos = pd.read_excel('./festivos.xlsx')
 df_festivos['Fecha'] = pd.to_datetime(df_festivos['Fecha'], format="%d/%m/%Y").dt.date
 set_festivos = set(df_festivos['Fecha'].values)
 
